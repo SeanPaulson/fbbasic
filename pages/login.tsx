@@ -1,10 +1,12 @@
 import type { NextPage } from "next";
+import { signIn, SignInResponse, useSession } from "next-auth/react";
 import { FormEvent, useState } from "react";
 import styles from "../styles/Login.module.css";
 
 
-
 const Login: NextPage = () => {
+
+  const [error, setError] = useState(false);
 
   const [input, setInput] = useState({
     name: "",
@@ -13,30 +15,37 @@ const Login: NextPage = () => {
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLTextAreaElement;
-    const value : string = target.value;
-    const name : string = target.name;
     
     setInput(prev => ({
         ...prev, [target.name]: target.value,
       }));
   };
 
-  const handleSubmit = (e: FormEvent): void => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
+    const error = await signIn('credentials', {
+      name: input.name,
+      password: input.password,
+      callbackUrl: '/',
+      redirect: false,
+    });
+
+    if (error?.error) {
+      console.log(error);
+      setError(true);
+    }
     setInput({
         name: "",
         password: ""
     });
   };
-
   return (
     <form
       className={styles.form}
-      action="/api/login"
       method="post"
       onSubmit={handleSubmit}
     >
-      <button className={styles.form__button} type="submit">
+      <button className={styles.form__button} type="submit" >
         Login
       </button>
       <input
@@ -47,10 +56,9 @@ const Login: NextPage = () => {
         name="name"
         id="name"
         onChange={handleChange}
-        value={input.name}
-      />
+        value={input.name}      />
       <input
-        className={styles.form__input}
+        className={error ? styles.form__input : styles.form__input__error}
         required
         placeholder="Password:"
         type="password"
