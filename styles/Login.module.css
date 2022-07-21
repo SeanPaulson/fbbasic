@@ -39,15 +39,14 @@
     text-align: center;
 }
 
-.form__input__error {
-    border-color: red;
+.form__inputError {
     width: 336px;
     height: 41px;
     left: 552px;
     top: 533px;
     color: black;
     background: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.14);
+    border: 1px solid red;
     box-shadow: inset -4px -2px 5px -2px rgba(84, 84, 84, 0.71);
     text-align: center;
 }
