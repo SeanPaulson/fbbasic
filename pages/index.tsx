@@ -35,6 +35,22 @@ if(status === 'authenticated') {
   <button onClick={() => signOut()}>logout</button>
   </main>
 </div>
+} else if (status === 'loading') {
+  return (
+    <div className={styles.container}>
+  <Head>
+    <title>fbBasic</title>
+    <meta
+      name="description"
+      content="A basic Facebook app created with nextjs"
+    />
+    <link rel="icon" href="/favicon.ico" />
+  </Head>
+  <main>
+  <p>Loading...</p>
+  </main>
+</div>
+  )
 }
 
   return (
@@ -53,6 +69,7 @@ if(status === 'authenticated') {
     </div>
   );
 };
+
 
 export default Home;
 

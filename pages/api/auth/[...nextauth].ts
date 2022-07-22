@@ -26,7 +26,6 @@ export default nextAuth({
         
         // If no error and we have user data, return it
         if (user?.password === 'password') {
-          console.log(user.password);
           return user;
         }
         // Return null if user data could not be retrieved
@@ -44,6 +43,12 @@ export default nextAuth({
     },
     session: ({session, token}) => {
         return session;
+    },
+    redirect: async ({url, baseUrl} ) => {
+      if (url === `/`) {
+        return baseUrl;
+      }
+      return url;
     }
   },
   secret: 'test',

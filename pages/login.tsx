@@ -2,8 +2,10 @@ import type { NextPage } from "next";
 import { signIn } from "next-auth/react";
 import { FormEvent, useState } from "react";
 import styles from "../styles/Login.module.css";
+import { useRouter } from "next/router";
 
 const Login: NextPage = () => {
+  const router = useRouter();
   const [error, setError] = useState(false);
 
   const [input, setInput] = useState({
@@ -24,13 +26,19 @@ const Login: NextPage = () => {
     const error = await signIn("credentials", {
       name: input.name,
       password: input.password,
+      redirect: false,
       callbackUrl: '/',
+    }).then(res => {
+      if (res?.error) {
+        setError(true)
+      } else {
+        setError(false);
+        const url = res?.url as string;
+        router.push(url);
+      }
+      return res;
     });
 
-    if (error?.error) {
-      console.log(error);
-      setError(true);
-    }
     setInput({
       name: "",
       password: "",
