@@ -23,6 +23,7 @@
     width: 157px;
     height: 30px;
     margin-left: auto;
+    color: red;
 }
 
 .signout__btn {
@@ -35,4 +36,20 @@
     composes: default;
     height: 3rem;
     font-size: 20px;
+    
+}
+
+.dashBoard_btn {
+    composes: default;
+    /* margin-left: auto; */
+    height: 2.5rem;
+}
+
+.dashBoard_btnDeleteProfile {
+    composes: default;
+    width: 80%;
+    height: 2rem;
+    left: 4rem;
+    position: relative;
+    background-color: rgb(255, 212, 212);
 }

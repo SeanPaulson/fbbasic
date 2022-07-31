@@ -19,13 +19,27 @@ a {
 
 * {
   box-sizing: border-box;
-  
+
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 #__next {
   height: 80%;
-  width: 100vw;
+  width: 60vw;
   padding: 4.5rem;
   background-color: white;
   margin: 4.5rem;
+
+
+}
+
+@media only screen and (max-width: 1500px) {
+  #__next {
+    width: 100vw;
+  }
 }
