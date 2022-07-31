@@ -1,75 +1,53 @@
-import type { NextPage } from "next";
-import Head from "next/head";
+import HeadContents from "../src/components/HeadContents";
 import styles from "../styles/Home.module.css";
-import { useSession, signOut } from "next-auth/react";
-import {useRouter} from "next/router";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { NextPageWithLayout } from "./_app";
+import Head from "next/head";
+import Button from "../src/components/button/Button";
+import Layout from "../src/components/Layout";
+import { ReactElement, useEffect } from "react";
 
-const Home: NextPage = () => {
-  const {data, status} = useSession();
-
+const Home: NextPageWithLayout = (props) => {
+  const { data, status } = useSession();
   const router = useRouter();
 
-const handleClick = async () => {
-  
-  if (!data?.user) {
-    router.push('/login')
-    console.log(data);
+  useEffect(() => {
+    if (data?.user) {
+      router.push('/dashboard')
+    }
+  }, [])
+
+  const handleClick = async () => {
+    if (!data?.user) {
+      router.push("/login");
+    }
+    return;
+  };
+
+  if (status === "loading") {
+    return (
+      <div className={styles.container__login}>
+        <Head>
+          <HeadContents />
+        </Head>
+        <p>Loading...</p>
+      </div>
+    );
   }
-  console.log(data);
-  return;
-}
-
-if(status === 'authenticated') {
-  console.log(data);
-  return <div className={styles.container}>
-  <Head>
-    <title>fbBasic</title>
-    <meta
-      name="description"
-      content="A basic Facebook app created with nextjs"
-    />
-    <link rel="icon" href="/favicon.ico" />
-  </Head>
-  <main>
-  <p>{data.user?.name}</p>
-  <button onClick={() => signOut()}>logout</button>
-  </main>
-</div>
-} else if (status === 'loading') {
-  return (
-    <div className={styles.container}>
-  <Head>
-    <title>fbBasic</title>
-    <meta
-      name="description"
-      content="A basic Facebook app created with nextjs"
-    />
-    <link rel="icon" href="/favicon.ico" />
-  </Head>
-  <main>
-  <p>Loading...</p>
-  </main>
-</div>
-  )
-}
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container__login}>
       <Head>
-        <title>fbBasic</title>
-        <meta
-          name="description"
-          content="A basic Facebook app created with nextjs"
-        />
-        <link rel="icon" href="/favicon.ico" />
+        <HeadContents />
       </Head>
-      <main>
-      <button onClick={handleClick}>login</button>
-      </main>
+      <Button className="login__btn" width={'10rem'} onClick={handleClick}>login</Button>
     </div>
   );
 };
 
+Home.getLayout = function getLayout(Home: ReactElement) {
+  return <Layout>{Home}</Layout>;
+};
 
 export default Home;
-

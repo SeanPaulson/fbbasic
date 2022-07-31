@@ -8,6 +8,7 @@
     height: 639px;
     width: 466px;
     background-image: url('/backgroundLogin.png');
+    margin: auto;
 }
 
 .form__button {

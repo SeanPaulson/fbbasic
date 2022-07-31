@@ -1,0 +1,9 @@
+.dashBoard_container {
+    background-color: red;
+    height: 100%;
+    width: 100%;
+}
+
+.signout__btn {
+    color: red;
+}

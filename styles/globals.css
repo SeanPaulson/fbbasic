@@ -19,4 +19,13 @@ a {
 
 * {
   box-sizing: border-box;
+  
+}
+
+#__next {
+  height: 80%;
+  width: 100vw;
+  padding: 4.5rem;
+  background-color: white;
+  margin: 4.5rem;
 }

@@ -1,5 +1,16 @@
 .container {
-    background-color: #3F66CB;
+  background-color: rgb(251, 251, 251);
     height: 100%;
     width: 100%;
+  }
+
+  .container__login {
+    composes: container;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login__btn {
+    
   }

@@ -7,11 +7,11 @@ import { useRouter } from "next/router";
 const Login: NextPage = () => {
   const router = useRouter();
   const [error, setError] = useState(false);
-
   const [input, setInput] = useState({
     name: "",
     password: "",
   });
+
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLTextAreaElement;
 
@@ -27,14 +27,15 @@ const Login: NextPage = () => {
       name: input.name,
       password: input.password,
       redirect: false,
-      callbackUrl: '/',
-    }).then(res => {
+      callbackUrl: '/dashboard'
+    }).then((res) => {
       if (res?.error) {
-        setError(true)
+        console.log(res);
+        setError(true);
       } else {
         setError(false);
         const url = res?.url as string;
-        router.push(url);
+        router.push('http://localhost:3000/dashboard');
       }
       return res;
     });
@@ -44,6 +45,7 @@ const Login: NextPage = () => {
       password: "",
     });
   };
+
   return (
     <form className={styles.form} method="post" onSubmit={handleSubmit}>
       <button className={styles.form__button} type="submit">

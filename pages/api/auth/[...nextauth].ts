@@ -43,12 +43,6 @@ export default nextAuth({
     },
     session: ({session, token}) => {
         return session;
-    },
-    redirect: async ({url, baseUrl} ) => {
-      if (url === `/`) {
-        return baseUrl;
-      }
-      return url;
     }
   },
   secret: 'test',
