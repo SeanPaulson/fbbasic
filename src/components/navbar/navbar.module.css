@@ -12,6 +12,7 @@
     width: 100%;
     grid-area: navbar;
     background-color: white;
+
 }
 
 .nav_li {
@@ -33,4 +34,12 @@
 
 .li_Signout_btn {
     grid-area: loginbtn;
+    padding-bottom: 1rem;
+}
+
+
+.nav_header {
+    grid-area: left;
+    justify-self: end;
+    font-size: 2rem;
 }

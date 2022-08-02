@@ -4,41 +4,56 @@ import Button from "../../src/components/button/Button";
 import styles from "./dashBoard.module.css";
 import { useSession } from "next-auth/react";
 import DashboardLayout from "./DashboardLayout";
-import { ReactElement } from "react";
-import btnStyles from '../../src/components/button/Button.module.css';
+import { ReactElement, useState } from "react";
 
 const DashBoard = () => {
   const { data, status } = useSession();
-  console.log(data);
+  const [showFriends, setShowFriends] = useState(false);
 
-  return (
-    <>
-      <Head>
-        <HeadContents />
-      </Head>
-      <div className={styles.container}>
-        <ul className={styles.ul_main}>
-          <li className={styles.li_main}>
-            <p className={styles.main_p}>{data?.user?.name}</p>
-            <Button className='dashBoard_btn' onClick={() => null}>Edit Name</Button>
-          </li>
-          <li className={styles.li_main}>
-            <p className={styles.main_p} >example@email.com</p>
-            <Button className='dashBoard_btn' onClick={() => null}>Edit Email</Button>
-          </li>
-          <li className={styles.li_main}>
-            <p className={styles.main_p}>555-555-5555</p>
-            <Button className='dashBoard_btn' onClick={() => null}>Edit Number</Button>
-          </li>
-          <li className={styles.li_main}>
-            <p className={styles.main_p}>main st town, state, 33333</p>
-            <Button className='dashBoard_btn' onClick={() => null}>Edit address</Button>
-          </li>
-        </ul>
-        <Button className='dashBoard_btnDeleteProfile' onClick={() => null}>Delete Profile</Button>
-      </div>
-    </>
-  );
+  const handleClick = () => {
+    setShowFriends(!showFriends);
+  }
+
+  if (data?.user && status === "authenticated") {
+    return (
+      <>
+        <Head>
+          <HeadContents />
+        </Head>
+        <div className={styles.container}>
+          <ul className={styles.ul_main}>
+            <li className={styles.li_main}>
+              <p className={styles.main_p}>username</p>
+              <Button className="dashBoard_btn" onClick={() => null}>
+                profile
+              </Button>
+            </li>
+            <li className={styles.li_main}>
+              <p className={styles.main_p}>username</p>
+              <Button className="dashBoard_btn" onClick={() => null}>
+                profile
+              </Button>
+            </li>
+            <li className={styles.li_main}>
+              <p className={styles.main_p}>username</p>
+              <Button className="dashBoard_btn" onClick={() => null}>
+                profile
+              </Button>
+            </li>
+            <li className={styles.li_main}>
+              <p className={styles.main_p}>username</p>
+              <Button className="dashBoard_btn" onClick={() => null}>
+                profile
+              </Button>
+            </li>
+          </ul>
+          <Button className="dashBoard_close_btn" onClick={handleClick}>
+            close
+          </Button>
+        </div>
+      </>
+    );
+  } else return null;
 };
 
 DashBoard.getLayout = function getLayout(DashBoard: ReactElement) {

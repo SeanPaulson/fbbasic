@@ -53,3 +53,10 @@
     position: relative;
     background-color: rgb(255, 212, 212);
 }
+
+.dashBoard_close_btn {
+    composes: default;
+    /* position: relative; */
+    width: 100%;
+    left: 20rem;
+}
