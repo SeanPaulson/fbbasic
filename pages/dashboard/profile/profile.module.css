@@ -33,10 +33,11 @@
     padding-right: 6rem;
 }
 
-/* .ul_main_close{
-    transition
-} */
 
 .main_p {
+    flex: 0 1 50%;
+}
+
+.main_input {
     flex: 0 1 50%;
 }

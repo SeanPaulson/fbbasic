@@ -4,11 +4,57 @@ import Button from "../../../src/components/button/Button";
 import styles from "./profile.module.css";
 import { useSession } from "next-auth/react";
 import DashboardLayout from "../DashboardLayout";
-import { ReactElement } from "react";
+import {
+  ChangeEvent,
+  ReactElement,
+  useState,
+} from "react";
+
+function selectNodeToEdit(action: { type: string }): string | void {
+  switch (action.type) {
+    case "name":
+      return action.type;
+    case "email":
+      return action.type;
+    case "phone":
+      return action.type;
+    case "address":
+      return action.type;
+    default:
+      break;
+  }
+}
+
+type userInfo = {
+  email: string;
+  phone: string;
+  address: string;
+};
 
 const Profile = () => {
   const { data, status } = useSession();
-  
+  const [input, setInput] = useState<userInfo>({
+    email: "",
+    phone: "",
+    address: "",
+  });
+  const [editting, setEditting] = useState(false);
+  const [selectedNode, setSelectedNode] = useState("");
+
+  function handleClickEditting(fieldToEdit: string) {
+    const fieldName = selectNodeToEdit({ type: fieldToEdit });
+    fieldName && setSelectedNode(fieldName);
+    setEditting(!editting);
+  }
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    const { value } = e.currentTarget;
+    const { name } = e.currentTarget;
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
 
   if (data && status === "authenticated") {
     return (
@@ -20,26 +66,64 @@ const Profile = () => {
           <ul className={styles.ul_main}>
             <li className={styles.li_main}>
               <p className={styles.main_p}>{data?.user?.name}</p>
-              <Button className="dashBoard_btn" onClick={() => null}>
-                Edit Name
+              <p style={{ paddingRight: "1rem" }}>User Name</p>
+            </li>
+            <li className={styles.li_main}>
+              {editting && selectedNode === "email" ? (
+                <input
+                  className={styles.main_input}
+                  name="email"
+                  placeholder="email"
+                  onChange={(e) => handleChange(e)}
+                ></input>
+              ) : (
+                <p className={styles.main_p}>{input.email ? input.email : 'example@email.com'}</p>
+              )}
+              <Button
+                className="dashBoard_btn"
+                onClick={() => handleClickEditting("email")}
+              >
+                {editting && selectedNode === "email" ? "save" : "Edit Email"}
               </Button>
             </li>
             <li className={styles.li_main}>
-              <p className={styles.main_p}>example@email.com</p>
-              <Button className="dashBoard_btn" onClick={() => null}>
-                Edit Email
+              {editting && selectedNode === "phone" ? (
+                <input
+                  className={styles.main_input}
+                  name='phone'
+                  placeholder="phone"
+                  onChange={(e) => handleChange(e)}
+                ></input>
+              ) : (
+                <p className={styles.main_p}>
+                  {input.phone ? input.phone : "555-555-5555"}
+                </p>
+              )}
+              <Button
+                className="dashBoard_btn"
+                onClick={() => handleClickEditting("phone")}
+              >
+                {editting && selectedNode === "phone"  ? "save" : "Edit Number"}
               </Button>
             </li>
             <li className={styles.li_main}>
-              <p className={styles.main_p}>555-555-5555</p>
-              <Button className="dashBoard_btn" onClick={() => null}>
-                Edit Number
-              </Button>
-            </li>
-            <li className={styles.li_main}>
-              <p className={styles.main_p}>main st town, state, 33333</p>
-              <Button className="dashBoard_btn" onClick={() => null}>
-                Edit address
+              {editting && selectedNode === "address" ? (
+                <input
+                  className={styles.main_input}
+                  name="address"
+                  placeholder="address"
+                  onChange={(e) => handleChange(e)}
+                ></input>
+              ) : (
+                <p className={styles.main_p}>
+                  {input.address ? input.address : "main st town, state, 33333"}
+                </p>
+              )}
+              <Button
+                className="dashBoard_btn"
+                onClick={() => handleClickEditting("address")}
+              >
+                {editting && selectedNode === "address" ? "save" : "Edit address"}
               </Button>
             </li>
           </ul>
@@ -49,10 +133,8 @@ const Profile = () => {
         </div>
       </>
     );
-  } else return null
-
-} 
-
+  } else return null;
+};
 
 Profile.getLayout = function getLayout(Profile: ReactElement) {
   return <DashboardLayout>{Profile}</DashboardLayout>;

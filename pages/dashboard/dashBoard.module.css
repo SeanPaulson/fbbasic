@@ -22,7 +22,6 @@
 }
 
 .container:hover {
-    color: red;
     height: 0px;
     transition: all 5s;
 }
