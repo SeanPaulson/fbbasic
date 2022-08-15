@@ -4,6 +4,7 @@
     width: 100%;
     display: grid;
     grid-template-rows: 6rem 1fr;
+    grid-template-columns: auto 1fr auto;
     grid-template-areas:
         "navbar navbar navbar"
         "main main main";
@@ -14,11 +15,10 @@
 .container {
     grid-area: main;
     justify-self: center;
-    width: 60%;
-    height: 200px;
+    width: 100%;
+    height: fit-content;
     margin-top: 4rem;
     padding: 0 6rem;
-    max-width: fit-content;
 }
 
 .container:hover {
@@ -37,10 +37,12 @@
 .ul_main {
     display: flex;
     flex-direction: column;
-    max-width:500px
+    max-width:500px;
+    margin: auto;
 }
 
 .main_p {
-    flex: 0 1;
+    flex-grow: 1;
+    text-align: center;
 }
 

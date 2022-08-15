@@ -7,8 +7,10 @@ import DashboardLayout from "../DashboardLayout";
 import {
   ChangeEvent,
   ReactElement,
+  useContext,
   useState,
 } from "react";
+import { UserContext } from "../../../src/components/UserContext";
 
 function selectNodeToEdit(action: { type: string }): string | void {
   switch (action.type) {
@@ -25,19 +27,9 @@ function selectNodeToEdit(action: { type: string }): string | void {
   }
 }
 
-type userInfo = {
-  email: string;
-  phone: string;
-  address: string;
-};
-
 const Profile = () => {
   const { data, status } = useSession();
-  const [input, setInput] = useState<userInfo>({
-    email: "",
-    phone: "",
-    address: "",
-  });
+  const {state, dispatch} = useContext(UserContext)
   const [editting, setEditting] = useState(false);
   const [selectedNode, setSelectedNode] = useState("");
 
@@ -50,10 +42,7 @@ const Profile = () => {
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { value } = e.currentTarget;
     const { name } = e.currentTarget;
-    setInput((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    dispatch({type: `${name}`, payload: value})
   }
 
   if (data && status === "authenticated") {
@@ -77,7 +66,7 @@ const Profile = () => {
                   onChange={(e) => handleChange(e)}
                 ></input>
               ) : (
-                <p className={styles.main_p}>{input.email ? input.email : 'example@email.com'}</p>
+                <p className={styles.main_p}>{state.email ? state.email : 'example@email.com'}</p>
               )}
               <Button
                 className="dashBoard_btn"
@@ -96,7 +85,7 @@ const Profile = () => {
                 ></input>
               ) : (
                 <p className={styles.main_p}>
-                  {input.phone ? input.phone : "555-555-5555"}
+                  {state.phone ? state.phone : "555-555-5555"}
                 </p>
               )}
               <Button
@@ -116,7 +105,7 @@ const Profile = () => {
                 ></input>
               ) : (
                 <p className={styles.main_p}>
-                  {input.address ? input.address : "main st town, state, 33333"}
+                  {state.address ? state.address : "main st town, state, 33333"}
                 </p>
               )}
               <Button

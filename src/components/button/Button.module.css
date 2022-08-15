@@ -43,6 +43,7 @@
     composes: default;
     /* margin-left: auto; */
     height: 2.5rem;
+    align-self: center;
 }
 
 .dashBoard_btnDeleteProfile {
